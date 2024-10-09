@@ -1,0 +1,1501 @@
+<xmap>
+<doc type="fftrg" name="Target_810_ANY_FF">
+<message></message>
+<exd>../jobs/IGLOO_810_ANY_FF/exd_Exchange_810_ANY_FF.xml#Exchange_810_ANY_FF</exd>
+<Directory>@targetfolder</Directory>
+<FileName>@output</FileName>
+<ExdDataDependency>True</ExdDataDependency>
+<writeidentifiers>Yes</writeidentifiers>
+<TruncateTrailDelimiters>No</TruncateTrailDelimiters>
+<fileopenmode>w</fileopenmode>
+<AppendOutputListFile>False</AppendOutputListFile>
+<CloseFileBeforePostProcessing>False</CloseFileBeforePostProcessing>
+<node type="function" name="PreProcessing">
+<functions FunctionCount="3">
+<function type="Operatevariable" name="output" value="@Filename" />
+<function type="SetDynamicName" variable="temp" format="_[C].txt" />
+<function type="Operatevariable" name="output" value="+@temp" />
+</functions>
+</node>
+
+<recordend>NEWLINE</recordend>
+<offsetbegin>0</offsetbegin>
+<node type="record" name="FF" level="1">
+<node type="field" order="1" name="Receiver_ID">
+<separator>TAB</separator>
+<functions FunctionCount="4">
+<function type="Nextrow" exd="Exchange_810_ANY_FF" table="Header"/>
+<function type="Nextrow" exd="Exchange_810_ANY_FF" table="Detail"/>
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Receiver_ID"/>
+<function type="Setvariable" name="vRecID"/>
+</functions>
+</node>
+<node type="field" order="2" name="Invoice_Date">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_Date"/>
+</functions>
+</node>
+<node type="field" order="3" name="Invoice_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_No"/>
+</functions>
+</node>
+<node type="field" order="4" name="PO_Date">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="PO_Date"/>
+</functions>
+</node>
+<node type="field" order="5" name="PO_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="PO_No"/>
+</functions>
+</node>
+<node type="field" order="6" name="PO_Release_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="PO_Release_No"/>
+</functions>
+</node>
+<node type="field" order="7" name="Invoice_Type">
+<separator>TAB</separator>
+<functions FunctionCount="8">
+<function type="Lookup" filename="@vLookup" section="6" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT6"/>
+<function type="If" lvalue="@vT6" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT6"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_Type"/>
+<function type="EndIf" />
+<function type="Setvariable" name="vBIG07"/>
+</functions>
+</node>
+<node type="field" order="8" name="Transaction_Set_Purpose_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="9" name="Action_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="10" name="ASN_Shipment_ID">
+<separator>TAB</separator>
+</node>
+<node type="field" order="11" name="Currency_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Currency_Code"/>
+</functions>
+</node>
+<node type="field" order="12" name="Vendor_Order_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Vendor_Order_No"/>
+</functions>
+</node>
+<node type="field" order="13" name="Customer_Order_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Customer_Order_No"/>
+</functions>
+</node>
+<node type="field" order="14" name="Department_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Department_No"/>
+</functions>
+</node>
+<node type="field" order="15" name="Department_Description">
+<separator>TAB</separator>
+</node>
+<node type="field" order="16" name="Merchandise_Type_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Merchandise_Type_Code"/>
+</functions>
+</node>
+<node type="field" order="17" name="Internal_Vendor_No_Vendor_ID">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="Lookup" filename="@vLookup" section="16" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT16"/>
+<function type="If" lvalue="@vT16" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT16"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Internal_Vendor_No_Vendor_ID"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="18" name="Credit_Authorization_No">
+<separator>TAB</separator>
+<functions FunctionCount="4">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Credit_Authorization_No"/>
+<function type="If" lvalue="@vRecID" rvalue="015256" operator="="/>
+<function type="Fixedvalue" value="5055037200003"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="19" name="Original_Invoice_No">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="If" lvalue="@vRecID" rvalue="048204" operator="="/>
+<function type="Lookup" filename="@vLookup" section="16" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT18"/>
+<function type="If" lvalue="@vT18" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT18"/>
+<function type="EndIf" />
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="20" name="Packing_Slip_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="21" name="Carrier_PRO_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="22" name="Contract_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="23" name="Promotion_Deal_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="24" name="Miscellanous_Reference_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="25" name="Shipped_Date">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Shipped_Date"/>
+</functions>
+</node>
+<node type="field" order="26" name="Delivery_Date">
+<separator>TAB</separator>
+</node>
+<node type="field" order="27" name="add_Date_Header1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="28" name="add_Date_Header2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="29" name="Terms_Type_Code">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="Lookup" filename="@vLookup" section="28" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT28"/>
+<function type="If" lvalue="@vT28" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT28"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Type_Code"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="30" name="Terms_Basis_Date_Code">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="Lookup" filename="@vLookup" section="29" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT29"/>
+<function type="If" lvalue="@vT29" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT29"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Basis_Date_Code"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="31" name="Terms_Discount_Percent">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Percent"/>
+</functions>
+</node>
+<node type="field" order="32" name="Terms_Discount_Amount">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Amount"/>
+</functions>
+</node>
+<node type="field" order="33" name="Terms_Discount_Due_Date">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Due_Date"/>
+</functions>
+</node>
+<node type="field" order="34" name="Terms_Discount_Days_Due">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Days_Due"/>
+</functions>
+</node>
+<node type="field" order="35" name="Terms_Net_Due_Date">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Net_Due_Date"/>
+</functions>
+</node>
+<node type="field" order="36" name="Terms_Net_Days">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Net_Days"/>
+</functions>
+</node>
+<node type="field" order="37" name="Terms_Description">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Description"/>
+</functions>
+</node>
+<node type="field" order="38" name="FOB_Payment_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="FOB_Payment_Code"/>
+</functions>
+</node>
+<node type="field" order="39" name="FOB_Point_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="40" name="FOB_Point_Description">
+<separator>TAB</separator>
+</node>
+<node type="field" order="41" name="Buyer_Mark_For_Name">
+<separator>TAB</separator>
+</node>
+<node type="field" order="42" name="Buyer_Mark_For_Store_Qualifier">
+<separator>TAB</separator>
+</node>
+<node type="field" order="43" name="Buyer_Mark_For_Store_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="44" name="Buyer_Mark_For_Address1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="45" name="Buyer_Mark_For_Address2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="46" name="Buyer_Mark_For_City">
+<separator>TAB</separator>
+</node>
+<node type="field" order="47" name="Buyer_Mark_For_State">
+<separator>TAB</separator>
+</node>
+<node type="field" order="48" name="Buyer_Mark_For_Zip_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="49" name="Buyer_Mark_For_Country">
+<separator>TAB</separator>
+</node>
+<node type="field" order="50" name="Buyer_Contact_Name">
+<separator>TAB</separator>
+</node>
+<node type="field" order="51" name="Buyer_Contact_Phone">
+<separator>TAB</separator>
+</node>
+<node type="field" order="52" name="Buyer_Contact_Email">
+<separator>TAB</separator>
+<functions FunctionCount="3">
+<function type="If" lvalue="@vRecID" rvalue="118059" operator="="/>
+<function type="Fixedvalue" value="281-392-2009"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="53" name="Remit_To_Name">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Name"/>
+</functions>
+</node>
+<node type="field" order="54" name="Remit_To_Code_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Code_Qualifier"/>
+</functions>
+</node>
+<node type="field" order="55" name="Remit_To_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Code"/>
+</functions>
+</node>
+<node type="field" order="56" name="Remit_To_Address1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Address1"/>
+</functions>
+</node>
+<node type="field" order="57" name="Remit_To_Address2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Address2"/>
+</functions>
+</node>
+<node type="field" order="58" name="Remit_To_City">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_City"/>
+</functions>
+</node>
+<node type="field" order="59" name="Remit_To_State">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_State"/>
+</functions>
+</node>
+<node type="field" order="60" name="Remit_To_Zip_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Zip_Code"/>
+</functions>
+</node>
+<node type="field" order="61" name="Remit_To_Country_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Country_Code"/>
+</functions>
+</node>
+<node type="field" order="62" name="Remit_To_Contact_Name">
+<separator>TAB</separator>
+</node>
+<node type="field" order="63" name="Remit_To_Contact_Phone">
+<separator>TAB</separator>
+</node>
+<node type="field" order="64" name="Remit_To_Contact_Email">
+<separator>TAB</separator>
+</node>
+<node type="field" order="65" name="Vendor_Name">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="Igloo"/>
+</functions>
+</node>
+<node type="field" order="66" name="Vendor_Code_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="92"/>
+</functions>
+</node>
+<node type="field" order="67" name="Vendor_Code">
+<separator>TAB</separator>
+<functions FunctionCount="4">
+<function type="Fixedvalue" value="0621184270000"/>
+<function type="If" lvalue="@vRecID" rvalue="068615" operator="=" datatype="text"/>
+<function type="Fixedvalue" value="0001135519"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="68" name="Vendor_Address1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="777 Igloo Road"/>
+</functions>
+</node>
+<node type="field" order="69" name="Vendor_Address2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="Katy"/>
+</functions>
+</node>
+<node type="field" order="70" name="Vendor_City">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="TX"/>
+</functions>
+</node>
+<node type="field" order="71" name="Vendor_State">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="77494"/>
+</functions>
+</node>
+<node type="field" order="72" name="Vendor_Zip_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="73" name="Vendor_Country_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="74" name="Vendor_Contact_Name">
+<separator>TAB</separator>
+</node>
+<node type="field" order="75" name="Vendor_Contact_Phone">
+<separator>TAB</separator>
+</node>
+<node type="field" order="76" name="Vendor_Contact_Email">
+<separator>TAB</separator>
+</node>
+<node type="field" order="77" name="Ship_From_Name">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="IGLOO PRODUCTS CORP"/>
+</functions>
+</node>
+<node type="field" order="78" name="Ship_From_Code_Qualifier">
+<separator>TAB</separator>
+</node>
+<node type="field" order="79" name="Ship_From_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="80" name="Ship_From_Address1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="81" name="Ship_From_Address2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="82" name="Ship_From_City">
+<separator>TAB</separator>
+</node>
+<node type="field" order="83" name="Ship_From_State">
+<separator>TAB</separator>
+</node>
+<node type="field" order="84" name="Ship_From_Zip_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="85" name="Ship_From_Country">
+<separator>TAB</separator>
+</node>
+<node type="field" order="86" name="Ship_To_Name">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Name"/>
+</functions>
+</node>
+<node type="field" order="87" name="Ship_To_Code_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="Lookup" filename="@vLookup" section="86" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT86"/>
+<function type="If" lvalue="@vT86" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT86"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code_Qualifier"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="88" name="Ship_To_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code"/>
+</functions>
+</node>
+<node type="field" order="89" name="Ship_To_Address1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Address1"/>
+</functions>
+</node>
+<node type="field" order="90" name="Ship_To_Address2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Address2"/>
+</functions>
+</node>
+<node type="field" order="91" name="Ship_To_City">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_City"/>
+</functions>
+</node>
+<node type="field" order="92" name="Ship_To_State">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_State"/>
+</functions>
+</node>
+<node type="field" order="93" name="Ship_To_Zip_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Zip_Code"/>
+</functions>
+</node>
+<node type="field" order="94" name="Ship_To_Country_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Country_Code"/>
+</functions>
+</node>
+<node type="field" order="95" name="Ship_To_Contact_Name">
+<separator>TAB</separator>
+</node>
+<node type="field" order="96" name="Ship_To_Contact_Phone">
+<separator>TAB</separator>
+</node>
+<node type="field" order="97" name="Ship_To_Contact_Email">
+<separator>TAB</separator>
+</node>
+<node type="field" order="98" name="Bill_To_Name">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Name"/>
+</functions>
+</node>
+<node type="field" order="99" name="Bill_To_Code_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Code_Qualifier"/>
+</functions>
+</node>
+<node type="field" order="100" name="Bill_To_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Code"/>
+</functions>
+</node>
+<node type="field" order="101" name="Bill_To_Address1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Address1"/>
+</functions>
+</node>
+<node type="field" order="102" name="Bill_To_Address2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Address2"/>
+</functions>
+</node>
+<node type="field" order="103" name="Bill_To_City">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_City"/>
+</functions>
+</node>
+<node type="field" order="104" name="Bill_To_State">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_State"/>
+</functions>
+</node>
+<node type="field" order="105" name="Bill_To_Zip_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Zip_Code"/>
+</functions>
+</node>
+<node type="field" order="106" name="Bill_To_Country">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Country"/>
+</functions>
+</node>
+<node type="field" order="107" name="Bill_To_Contact_Name">
+<separator>TAB</separator>
+</node>
+<node type="field" order="108" name="Bill_To_Contact_Phone">
+<separator>TAB</separator>
+</node>
+<node type="field" order="109" name="Bill_To_Contact_Email">
+<separator>TAB</separator>
+</node>
+<node type="field" order="110" name="add_Field_Header1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="111" name="add_Field_Header2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="112" name="add_Field_Header3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="113" name="add_Field_Header4">
+<separator>TAB</separator>
+</node>
+<node type="field" order="114" name="add_Field_Header5">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header5"/>
+</functions>
+</node>
+<node type="field" order="115" name="add_Field_Header6">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header6"/>
+</functions>
+</node>
+<node type="field" order="116" name="add_Field_Header7">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header7"/>
+</functions>
+</node>
+<node type="field" order="117" name="add_Field_Header8">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header8"/>
+</functions>
+</node>
+<node type="field" order="118" name="add_Field_Header9">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header9"/>
+</functions>
+</node>
+<node type="field" order="119" name="add_Field_Header10">
+<separator>TAB</separator>
+<functions FunctionCount="3">
+<function type="If" lvalue="@vRecID" rvalue="003570" operator="=" datatype="text"/>
+<function type="Fixedvalue" value="51270"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="120" name="PO_Line_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="PO_Line_No"/>
+</functions>
+</node>
+<node type="field" order="121" name="Qty_Invoiced">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Invoiced"/>
+</functions>
+</node>
+<node type="field" order="122" name="Qty_Invoiced_UOM">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Invoiced_UOM"/>
+</functions>
+</node>
+<node type="field" order="123" name="Unit_Price">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Unit_Price"/>
+</functions>
+</node>
+<node type="field" order="124" name="Basis_of_Unit_Price_Code">
+<separator>TAB</separator>
+<functions FunctionCount="5">
+<function type="Lookup" filename="@vLookup" section="123" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT123"/>
+<function type="If" lvalue="@vT123" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT123"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="125" name="UPC_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="Lookup" filename="@vLookup" section="124" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT124"/>
+<function type="If" lvalue="@vT124" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT124"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="UPC_Qualifier"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="126" name="UPC_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="UPC_Code"/>
+</functions>
+</node>
+<node type="field" order="127" name="Buyer_Item_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="Lookup" filename="@vLookup" section="126" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT126"/>
+<function type="If" lvalue="@vT126" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT126"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Buyer_Item_Qualifier"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="128" name="Buyer_Item_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Buyer_Item_No"/>
+</functions>
+</node>
+<node type="field" order="129" name="Vendor_Item_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="7">
+<function type="Lookup" filename="@vLookup" section="128" casesensitive="False" load="False" key="@vRecID"/>
+<function type="Setvariable" name="vT128"/>
+<function type="If" lvalue="@vT128" rvalue="@vNull" operator="!="/>
+<function type="Fixedvalue" value="@vT128"/>
+<function type="Else" />
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Vendor_Item_Qualifier"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="130" name="Vendor_Item_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Vendor_Item_No"/>
+</functions>
+</node>
+<node type="field" order="131" name="Product_Qualifier4">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Product_Qualifier4"/>
+</functions>
+</node>
+<node type="field" order="132" name="Product_Code4">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Product_Code4"/>
+</functions>
+</node>
+<node type="field" order="133" name="Product_Qualifier5">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Product_Qualifier5"/>
+</functions>
+</node>
+<node type="field" order="134" name="Product_Code5">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Product_Code5"/>
+</functions>
+</node>
+<node type="field" order="135" name="Retail_Price">
+<separator>TAB</separator>
+</node>
+<node type="field" order="136" name="Discount_Multiplier">
+<separator>TAB</separator>
+</node>
+<node type="field" order="137" name="Item_Description">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Description"/>
+</functions>
+</node>
+<node type="field" order="138" name="Item_Color">
+<separator>TAB</separator>
+</node>
+<node type="field" order="139" name="Item_Size">
+<separator>TAB</separator>
+</node>
+<node type="field" order="140" name="Pack">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Pack"/>
+</functions>
+</node>
+<node type="field" order="141" name="Pack_Size">
+<separator>TAB</separator>
+</node>
+<node type="field" order="142" name="Pack_UOM">
+<separator>TAB</separator>
+</node>
+<node type="field" order="143" name="Inner_Pack">
+<separator>TAB</separator>
+</node>
+<node type="field" order="144" name="Qty_Shipped">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Shipped"/>
+</functions>
+</node>
+<node type="field" order="145" name="Qty_Shipped_UOM">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Shipped_UOM"/>
+</functions>
+</node>
+<node type="field" order="146" name="Line_Item_Status_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="147" name="Quantity_Difference">
+<separator>TAB</separator>
+</node>
+<node type="field" order="148" name="PO_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="149" name="Line_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Line_No"/>
+</functions>
+</node>
+<node type="field" order="150" name="Item_Tracking_No">
+<separator>TAB</separator>
+</node>
+<node type="field" order="151" name="Line_Level_Compliance_Code">
+<separator>TAB</separator>
+</node>
+<node type="field" order="152" name="Line_Level_Compliance_Description">
+<separator>TAB</separator>
+</node>
+<node type="field" order="153" name="Backordered_Scheduled_Ship_on_Date">
+<separator>TAB</separator>
+</node>
+<node type="field" order="154" name="Item_Allowance_Code1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Code1"/>
+</functions>
+</node>
+<node type="field" order="155" name="Item_Allowance_Amount1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Amount1"/>
+</functions>
+</node>
+<node type="field" order="156" name="Item_Allowance_Percent_Qualifier1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="157" name="Item_Allowance_Percent1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Percent1"/>
+</functions>
+</node>
+<node type="field" order="158" name="Item_Allowance_Rate1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="159" name="Item_Allowance_Unit1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="160" name="Item_Allowance_Quantity1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="161" name="Item_Allowance_Method_of_Handling1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="162" name="Item_Allowance_Description1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Description1"/>
+</functions>
+</node>
+<node type="field" order="163" name="Item_Allowance_Code2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Code2"/>
+</functions>
+</node>
+<node type="field" order="164" name="Item_Allowance_Amount2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Amount2"/>
+</functions>
+</node>
+<node type="field" order="165" name="Item_Allowance_Percent_Qualifier2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="166" name="Item_Allowance_Percent2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="167" name="Item_Allowance_Rate2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="168" name="Item_Allowance_Unit2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="169" name="Item_Allowance_Quantity2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="170" name="Item_Allowance_Method_of_Handling2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="171" name="Item_Allowance_Description2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Description2"/>
+</functions>
+</node>
+<node type="field" order="172" name="Item_Charge_Code1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Charge_Code1"/>
+</functions>
+</node>
+<node type="field" order="173" name="Item_Charge_Amount1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Charge_Amount1"/>
+</functions>
+</node>
+<node type="field" order="174" name="Item_Charge_Percent_Qualifier1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="175" name="Item_Charge_Percent1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="176" name="Item_Charge_Rate1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="177" name="Item_Charge_Unit1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="178" name="Item_Charge_Quantity1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="179" name="Item_Charge_Method_of_Handling1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="180" name="Item_Charge_Description1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="181" name="Item_Charge_Code2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="182" name="Item_Charge_Amount2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="183" name="Item_Charge_Percent_Qualifier2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="184" name="Item_Charge_Percent2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="185" name="Item_Charge_Rate2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="186" name="Item_Charge_Unit2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="187" name="Item_Charge_Quantity2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="188" name="Item_Charge_Method_of_Handling2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="189" name="Item_Charge_Description2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="190" name="Item_Tax_Type1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="191" name="Item_Tax_Amount1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="192" name="Item_Tax_Percent1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="193" name="Item_Tax_Jurisdiction_Code1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="194" name="Item_Tax_Type2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="195" name="Item_Tax_Amount2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="196" name="Item_Tax_Percent2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="197" name="Item_Tax_Jurisdiction_Code2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="198" name="add_Field_Detail1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="add_Field_Detail1"/>
+</functions>
+</node>
+<node type="field" order="199" name="add_Field_Detail2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="200" name="add_Field_Detail3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="201" name="add_Field_Detail4">
+<separator>TAB</separator>
+</node>
+<node type="field" order="202" name="add_Field_Detail5">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Detail" field="add_Field_Detail5"/>
+</functions>
+</node>
+<node type="field" order="203" name="add_Field_Detail6">
+<separator>TAB</separator>
+</node>
+<node type="field" order="204" name="add_Field_Detail7">
+<separator>TAB</separator>
+</node>
+<node type="field" order="205" name="add_Field_Detail8">
+<separator>TAB</separator>
+</node>
+<node type="field" order="206" name="add_Field_Detail9">
+<separator>TAB</separator>
+</node>
+<node type="field" order="207" name="add_Field_Detail10">
+<separator>TAB</separator>
+</node>
+<node type="field" order="208" name="Total_Cartons_Shipped">
+<separator>TAB</separator>
+</node>
+<node type="field" order="209" name="Total_Cartons_Shipped_UOM">
+<separator>TAB</separator>
+</node>
+<node type="field" order="210" name="Total_Units_Shipped">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Units_Shipped"/>
+</functions>
+</node>
+<node type="field" order="211" name="Total_Units_Shipped_UOM">
+<separator>TAB</separator>
+<functions FunctionCount="3">
+<function type="If" lvalue="@vReceiverID" rvalue="028128" operator="="/>
+<function type="Fixedvalue" value="CA"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="212" name="Total_Weight">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Weight"/>
+</functions>
+</node>
+<node type="field" order="213" name="Total_Weight_UOM">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Weight_UOM"/>
+</functions>
+</node>
+<node type="field" order="214" name="Total_Volume">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Volume"/>
+</functions>
+</node>
+<node type="field" order="215" name="Total_Volume_UOM">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Volume_UOM"/>
+</functions>
+</node>
+<node type="field" order="216" name="Total_Invoice_Amount_Gross_Amt_Charges_Allowances_Taxes">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Invoice_Amount_Gross_Amt_Charges_Allowances_Taxes"/>
+</functions>
+</node>
+<node type="field" order="217" name="Total_Invoice_Amount_Subj_to_Terms_Gross_Amt">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Invoice_Amount_Subj_to_Terms_Gross_Amt"/>
+</functions>
+</node>
+<node type="field" order="218" name="Total_Invoice_Amount_Less_Discount_Gross_Amt_Terms_Discount">
+<separator>TAB</separator>
+</node>
+<node type="field" order="219" name="Total_Discount_Amount">
+<separator>TAB</separator>
+</node>
+<node type="field" order="220" name="Total_No_of_Line_Items">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_No_of_Line_Items"/>
+</functions>
+</node>
+<node type="field" order="221" name="Transportation_Type_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Fixedvalue" value="M"/>
+</functions>
+</node>
+<node type="field" order="222" name="SCAC_Code">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="SCAC_Code"/>
+</functions>
+</node>
+<node type="field" order="223" name="Carrier_Name">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Carrier_Name"/>
+</functions>
+</node>
+<node type="field" order="224" name="Bill_of_Lading_PRO_No_Qualifier">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_of_Lading_PRO_No_Qualifier"/>
+</functions>
+</node>
+<node type="field" order="225" name="Bill_of_Lading_PRO_No">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_of_Lading_PRO_No"/>
+</functions>
+</node>
+<node type="field" order="226" name="Allowance_Code1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code1"/>
+</functions>
+</node>
+<node type="field" order="227" name="Allowance_Amount1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount1"/>
+</functions>
+</node>
+<node type="field" order="228" name="Allowance_Percent_Qualifier1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="229" name="Allowance_Percent1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="230" name="Allowance_Rate1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="231" name="Allowance_Unit1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="232" name="Allowance_Quantity1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="233" name="Allowance_Method_of_Handling1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="234" name="Allowance_Description1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Description1"/>
+</functions>
+</node>
+<node type="field" order="235" name="Allowance_Code2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code2"/>
+</functions>
+</node>
+<node type="field" order="236" name="Allowance_Amount2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount2"/>
+</functions>
+</node>
+<node type="field" order="237" name="Allowance_Percent_Qualifier2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="238" name="Allowance_Percent2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="239" name="Allowance_Rate2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="240" name="Allowance_Unit2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="241" name="Allowance_Quantity2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="242" name="Allowance_Method_of_Handling2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="243" name="Allowance_Description2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Description2"/>
+</functions>
+</node>
+<node type="field" order="244" name="Allowance_Code3">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code3"/>
+</functions>
+</node>
+<node type="field" order="245" name="Allowance_Amount3">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount3"/>
+</functions>
+</node>
+<node type="field" order="246" name="Allowance_Percent_Qualifier3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="247" name="Allowance_Percent3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="248" name="Allowance_Rate3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="249" name="Allowance_Unit3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="250" name="Allowance_Quantity3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="251" name="Allowance_Method_of_Handling3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="252" name="Allowance_Description3">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Description3"/>
+</functions>
+</node>
+<node type="field" order="253" name="Charge_Code1">
+<separator>TAB</separator>
+<functions FunctionCount="5">
+<function type="If" lvalue="@vRecID" rvalue="134456" operator="="/>
+<function type="Fixedvalue" value="C310"/>
+<function type="Else" />
+<function type="Fixedvalue" value="D240"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="254" name="Charge_Amount1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Charge_Amount1"/>
+</functions>
+</node>
+<node type="field" order="255" name="Charge_Percent_Qualifier1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="256" name="Charge_Percent1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="257" name="Charge_Rate1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="258" name="Charge_Unit1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="259" name="Charge_Quantity1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="260" name="Charge_Method_of_Handling1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="261" name="Charge_Description1">
+<separator>TAB</separator>
+<functions FunctionCount="3">
+<function type="If" lvalue="@vRecID" rvalue="134456" operator="="/>
+<function type="Fixedvalue" value="discount"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="262" name="Charge_Code2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="263" name="Charge_Amount2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="264" name="Charge_Percent_Qualifier2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="265" name="Charge_Percent2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="266" name="Charge_Rate2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="267" name="Charge_Unit2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="268" name="Charge_Quantity2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="269" name="Charge_Method_of_Handling2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="270" name="Charge_Description_2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="271" name="Charge_Code3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="272" name="Charge_Amount3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="273" name="Charge_Percent_Qualifier3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="274" name="Charge_Percent3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="275" name="Charge_Rate3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="276" name="Charge_Unit3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="277" name="Charge_Quantity3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="278" name="Charge_Method_of_Handling3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="279" name="Charge_Description_3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="280" name="Tax_Type1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Type1"/>
+</functions>
+</node>
+<node type="field" order="281" name="Tax_Amount1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Amount1"/>
+</functions>
+</node>
+<node type="field" order="282" name="Tax_Percent1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Percent1"/>
+</functions>
+</node>
+<node type="field" order="283" name="Tax_Jurisdiction_Code_Qualifier1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="284" name="Tax_Jurisdiction_Code1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="285" name="Tax_Exempt_Code1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="286" name="Tax_Dollar_Basis_For_Percent1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="287" name="TaxID1">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="TaxID1"/>
+</functions>
+</node>
+<node type="field" order="288" name="Tax_Type2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Type2"/>
+</functions>
+</node>
+<node type="field" order="289" name="Tax_Amount2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="290" name="Tax_Percent2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Percent2"/>
+</functions>
+</node>
+<node type="field" order="291" name="Tax_Jurisdiction_Code_Qualifier2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="292" name="Tax_Jurisdiction_Code_2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="293" name="Tax_Exempt_Code2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="294" name="Tax_Dollar_Basis_For_Percent2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="295" name="TaxID2">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="TaxID2"/>
+</functions>
+</node>
+<node type="field" order="296" name="Tax_Type3">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Type3"/>
+</functions>
+</node>
+<node type="field" order="297" name="Tax_Amount3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="298" name="Tax_Percent3">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Percent3"/>
+</functions>
+</node>
+<node type="field" order="299" name="Tax_Jurisdiction_Code_Qualifier3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="300" name="Tax_Jurisdiction_Code3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="301" name="Tax_Exempt_Code3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="302" name="Tax_Dollar_Basis_For_Percent3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="303" name="TaxID3">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="TaxID3"/>
+</functions>
+</node>
+<node type="field" order="304" name="add_Field_Summary1">
+<separator>TAB</separator>
+</node>
+<node type="field" order="305" name="add_Field_Summary2">
+<separator>TAB</separator>
+</node>
+<node type="field" order="306" name="add_Field_Summary3">
+<separator>TAB</separator>
+</node>
+<node type="field" order="307" name="add_Field_Summary4">
+<separator>TAB</separator>
+</node>
+<node type="field" order="308" name="add_Field_Summary5">
+<separator>TAB</separator>
+</node>
+<node type="field" order="309" name="add_Field_Summary6">
+<separator>TAB</separator>
+</node>
+<node type="field" order="310" name="add_Field_Summary7">
+<separator>TAB</separator>
+</node>
+<node type="field" order="311" name="add_Field_Summary8">
+<separator>TAB</separator>
+</node>
+<node type="field" order="312" name="add_Field_Summary9">
+<separator>TAB</separator>
+</node>
+<node type="field" order="313" name="add_Field_Summary10">
+<separator>TAB</separator>
+</node>
+<node type="field" order="314" name="add_Field_Summary11">
+<separator>TAB</separator>
+</node>
+<node type="field" order="315" name="add. Field Header12">
+<separator>TAB</separator>
+</node>
+<node type="field" order="316" name="add. Field Header13">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header13"/>
+</functions>
+</node>
+<node type="field" order="317" name="add. Field Header14">
+<separator>TAB</separator>
+</node>
+<node type="field" order="318" name="add. Field Header15">
+<separator>TAB</separator>
+</node>
+<node type="field" order="319" name="add. Field Header16">
+<separator>TAB</separator>
+</node>
+<node type="field" order="320" name="add. Field Header17">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header17"/>
+</functions>
+</node>
+<node type="field" order="321" name="add. Field Header18">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header18"/>
+</functions>
+</node>
+<node type="field" order="322" name="add. Field Header19">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header19"/>
+</functions>
+</node>
+<node type="field" order="323" name="Bill of Lading">
+<separator>TAB</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill of Lading"/>
+</functions>
+</node>
+<node type="field" order="324" name="Mark_For_Store">
+<separator>NONE</separator>
+<functions FunctionCount="1">
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Mark_For_Store"/>
+</functions>
+</node>
+</node>
+</doc>
+</xmap>

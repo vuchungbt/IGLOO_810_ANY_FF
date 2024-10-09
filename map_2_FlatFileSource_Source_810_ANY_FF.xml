@@ -1,0 +1,5016 @@
+<xmap>
+<doc type="ffsrc" name="Source_810_ANY_FF">
+<message></message>
+<exd>../jobs/IGLOO_810_ANY_FF/exd_Exchange_810_ANY_FF.xml#Exchange_810_ANY_FF</exd>
+<Category>FF</Category>
+<RightTrim>true</RightTrim>
+<SkipUnknownIdentifier>True</SkipUnknownIdentifier>
+<node type="function" name="PreProcessing">
+<functions FunctionCount="1">
+<function type="Setvariable" name="vNull" value="" datatype="Text" />
+</functions>
+</node>
+
+<recordend>NEWLINE</recordend>
+<offsetbegin>1</offsetbegin>
+<node type="record" name="RecNum10" level="1">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+<functions FunctionCount="9">
+<function type="Newrow" exd="Exchange_810_ANY_FF" table="Header"/>
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vNum-1" value="-1" datatype="Integer"/>
+<function type="Operatevariable" name="vCount_UPC_Num" value="0" datatype="Integer"/>
+<function type="Setvariable" name="vCount_UPC_Num_CostcoUS" value="0" datatype="Integer"/>
+<function type="Setvariable" name="vISS01" value="0" datatype="Money"/>
+<function type="Setvariable" name="vTXI03PS445" value="@null"/>
+<function type="Setvariable" name="vTXI03HS443" value="@null"/>
+<function type="Setvariable" name="vTXI03GS441" value="@null"/>
+</functions>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>0010</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Communication_Method">
+<offset>101</offset>
+<length>2</length>
+</node>
+<node type="field" order="9" name="Test_Indicator">
+<offset>103</offset>
+<length>1</length>
+</node>
+<node type="field" order="10" name="Transaction_Type">
+<offset>104</offset>
+<length>6</length>
+</node>
+<node type="field" order="11" name="Document_Type">
+<offset>110</offset>
+<length>5</length>
+</node>
+<node type="field" order="12" name="Doc_Purpose_Code">
+<offset>115</offset>
+<length>2</length>
+</node>
+<node type="field" order="13" name="Document_Code">
+<offset>117</offset>
+<length>35</length>
+<functions FunctionCount="4">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_No"/>
+<function type="Left" length="1" value="@currentvalue"/>
+<function type="Setvariable" name="vInvoice_No_left1" datatype="Text"/>
+</functions>
+</node>
+<node type="field" order="14" name="TP_Translator_Code">
+<offset>152</offset>
+<length>30</length>
+</node>
+<node type="field" order="15" name="TP_Location_Code">
+<offset>182</offset>
+<length>6</length>
+<functions FunctionCount="18">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vReceiverIDOriginal"/>
+<function type="Setvariable" name="vLookup" value="C:\DiCentral\DiUnite\jobs\IGLOO_810_ANY_FF\Lookup.txt"/>
+<function type="Lookup" filename="@vLookup" section="ReceiverId" casesensitive="False" load="False" key="@currentvalue"/>
+<function type="Setvariable" name="vReceiverID"/>
+<function type="Setvariable" name="vRecID_CreditInvoice" datatype="Text"/>
+<function type="Setvariable" name="vRecID_disregard" datatype="Text"/>
+<function type="Operatevariable" name="vRecID_CreditInvoice" value="+_" datatype="Text"/>
+<function type="Operatevariable" name="vRecID_CreditInvoice" value="+Credit Invoice" datatype="Text"/>
+<function type="Operatevariable" name="vRecID_disregard" value="+_" datatype="Text"/>
+<function type="Operatevariable" name="vRecID_disregard" value="+disregard" datatype="Text"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Receiver_ID" value="@vReceiverID"/>
+<function type="If" lvalue="@vReceiverID" rvalue="001340" operator="=" datatype="text"/>
+<function type="OrIf" lvalue="@vReceiverID" rvalue="900012" operator="=" datatype="text"/>
+<function type="If" lvalue="@vInvoice_No_left1" rvalue="9" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Receiver_ID" value="@vRecID_disregard"/>
+<function type="EndIf" />
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="16" name="TP_Description">
+<offset>217</offset>
+<length>74</length>
+</node>
+<node type="field" order="17" name="TP_Reference_EXT1">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="18" name="TP_Reference_EXT2">
+<offset>371</offset>
+<length>80</length>
+</node>
+<node type="field" order="19" name="Trans_Date/Time">
+<offset>451</offset>
+<length>15</length>
+</node>
+<node type="field" order="20" name="Transaction_Run_Id">
+<offset>466</offset>
+<length>15</length>
+</node>
+<node type="field" order="21" name="Control1">
+<offset>481</offset>
+<length>10</length>
+</node>
+<node type="field" order="22" name="Control2">
+<offset>491</offset>
+<length>10</length>
+</node>
+<node type="field" order="23" name="Control3">
+<offset>501</offset>
+<length>10</length>
+</node>
+<node type="record" name="RecNum20" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>0020</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Header_Context">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Header_Flexfield1">
+<offset>131</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Header_Flexfield2">
+<offset>211</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Header_Flexfield3">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Header_Flexfield4">
+<offset>371</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum30" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>0030</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Header_Flexfield5">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Header_Flexfield6">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Header_Flexfield7">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Header_Flexfield8">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Header_Flexfield8">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum40" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>0040</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Header_Flexfield10">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Header_Flexfield11">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Header_Flexfield12">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Header_Flexfield13">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Header_Flexfield14">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum50" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>0050</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Header_Flexfield15">
+<offset>101</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum60" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>0060</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum70" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>0070</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum1000" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1000</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_To_Code_Internal">
+<offset>101</offset>
+<length>20</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Code"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Code_Qualifier" value="1"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="9" name="Bill_To_Code_External">
+<offset>121</offset>
+<length>20</length>
+</node>
+<node type="field" order="10" name="Bill_To_Customer_Name">
+<offset>141</offset>
+<length>60</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Name"/>
+</functions>
+</node>
+<node type="field" order="11" name="Bill_To_Address1">
+<offset>201</offset>
+<length>35</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Address1"/>
+</functions>
+</node>
+<node type="field" order="12" name="Bill_To_Address2">
+<offset>236</offset>
+<length>35</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Address2"/>
+</functions>
+</node>
+<node type="field" order="13" name="Bill_to_Address3">
+<offset>271</offset>
+<length>35</length>
+</node>
+<node type="field" order="14" name="Bill_To_Address4">
+<offset>306</offset>
+<length>35</length>
+</node>
+<node type="field" order="15" name="Bill_To_City">
+<offset>341</offset>
+<length>30</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_City"/>
+</functions>
+</node>
+<node type="field" order="16" name="Bill_To_Postal_Code">
+<offset>371</offset>
+<length>15</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Zip_Code"/>
+</functions>
+</node>
+<node type="field" order="17" name="Bill_To_Country_Internal">
+<offset>386</offset>
+<length>20</length>
+<functions FunctionCount="3">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vBill_To_Country"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_Country"/>
+</functions>
+</node>
+<node type="field" order="18" name="Bill_To_Country_External">
+<offset>406</offset>
+<length>30</length>
+</node>
+<node type="field" order="19" name="Bill_To_State-Internal">
+<offset>409</offset>
+<length>20</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_State"/>
+</functions>
+</node>
+<node type="field" order="20" name="Bill_To_State_Ext1">
+<offset>429</offset>
+<length>10</length>
+</node>
+<node type="field" order="21" name="Bill_To_Province_Internal">
+<offset>439</offset>
+<length>20</length>
+<functions FunctionCount="4">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@vBill_To_Country" rvalue="CA" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_To_State"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="22" name="Bill_To_Province_Ext1">
+<offset>459</offset>
+<length>10</length>
+</node>
+<node type="field" order="23" name="Bill_To_County">
+<offset>469</offset>
+<length>25</length>
+</node>
+</node>
+<node type="record" name="RecNum1010" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1010</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_To_Customer_Location">
+<offset>101</offset>
+<length>40</length>
+</node>
+<node type="field" order="9" name="Bill_To_Customer_Number">
+<offset>141</offset>
+<length>30</length>
+</node>
+<node type="field" order="10" name="Bill_To_Customer_SIC_Code">
+<offset>171</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Bill_To_Customer_Sales_Channel">
+<offset>201</offset>
+<length>30</length>
+</node>
+<node type="field" order="12" name="Bill_To_Contact_Last_Name">
+<offset>231</offset>
+<length>50</length>
+</node>
+<node type="field" order="13" name="Bill_To_Contact_First_Name">
+<offset>281</offset>
+<length>40</length>
+</node>
+<node type="field" order="14" name="Bill_To_Contact_Job_Title">
+<offset>321</offset>
+<length>50</length>
+</node>
+</node>
+<node type="record" name="RecNum1015" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1015</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Trading_Partner_Ref1">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Trading_Partner_Ref2">
+<offset>181</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1020" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1020</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_To_Cust_Flex_Context">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Bill_To_Cust_Flex1">
+<offset>131</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Bill_To_Cust_Flex2">
+<offset>211</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Bill_To_Cust_Flex3">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Bill_to_Cust_Flex4">
+<offset>371</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1030" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1030</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_to_Cust_Flex5">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Bill_To_Cust_Flex6">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Bill_To_Cust_Flex7">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Bill_To_Cust_Flex8">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Bill_to_Cust_Flex9">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1040" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1040</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_to_Cust_Flex10">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Bill_To_Cust_Fle11">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Bill_To_Cust_Flex12">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Bill_To_Cust_Flex13">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Bill_to_Cust_Flex14">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1050" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1050</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_to_Cust_Flex15">
+<offset>101</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1060" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1060</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_To_Site_Flex_Context">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Bill_To_Site_Flex1">
+<offset>131</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Bill_To_Site_Flex2">
+<offset>211</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Bill_To_Site_Flex3">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Bill_To_Site_Flex4">
+<offset>371</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1070" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1070</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_To_Site_Flex5">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Bill_To_Site_Flex6">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Bill_To_Site_Flex7">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Bill_To_Site_Flex8">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Bill_To_Site_Flex9">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1080" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1080</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_To_Site_Flex10">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Bill_To_Site_Flex11">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Bill_To_Site_Flex12">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Bill_To_Site_Flex13">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Bill_To_Site_Flex14">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1090" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1090</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Bill_To_Site_Flex15">
+<offset>101</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1100" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1100</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Ship_To_Code_Internal">
+<offset>101</offset>
+<length>20</length>
+<functions FunctionCount="4">
+<function type="Trim" />
+<function type="If" lvalue="@vReceiverID" rvalue="900178" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="9" name="Ship_To_code_External">
+<offset>127</offset>
+<length>13</length>
+<functions FunctionCount="26">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vN104_ST"/>
+<function type="Setvariable" name="vN104_ST_Ori" datatype="Text"/>
+<function type="Lookup" filename="@vLookup" section="ShipToCodeQualifier" casesensitive="False" load="False" key="@vReceiverID"/>
+<function type="Setvariable" name="vShipToCodeQualifier"/>
+<function type="If" lvalue="@vShipToCodeQualifier" rvalue="9" operator="="/>
+<function type="Operatevariable" name="vN103_ST" value="@vShipToCodeQualifier"/>
+<function type="Elseif" lvalue="@vShipToCodeQualifier" rvalue="HO" operator="="/>
+<function type="Left" length="9" value="@vN104_ST"/>
+<function type="If" lvalue="@currentvalue" rvalue="006928311" operator="="/>
+<function type="Operatevariable" name="vN103_ST" value="DC"/>
+<function type="Elseif" lvalue="@currentvalue" rvalue="006928311" operator="!="/>
+<function type="Operatevariable" name="vN103_ST" value="SN"/>
+<function type="EndIf" />
+<function type="Elseif" lvalue="@vShipToCodeQualifier" rvalue="AFFILIATED" operator="="/>
+<function type="AndIf" lvalue="@vN104_ST" rvalue="0442762360000" operator="="/>
+<function type="Operatevariable" name="vN103_ST" value="9"/>
+<function type="EndIf" />
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code" value="@vN104_ST"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code_Qualifier" value="@vN103_ST"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vReceiverID" rvalue="015262" operator="="/>
+<function type="Padding" length="6" side="Left" symbol="0" variable="@vN104_ST"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code" value="@vN104_ST"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="10" name="Ship_To_Cust_Name">
+<offset>161</offset>
+<length>60</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Name"/>
+</functions>
+</node>
+<node type="field" order="11" name="Ship_To_Address1">
+<offset>221</offset>
+<length>35</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Address1"/>
+</functions>
+</node>
+<node type="field" order="12" name="Ship_To_Address2">
+<offset>256</offset>
+<length>35</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Address2"/>
+</functions>
+</node>
+<node type="field" order="13" name="Ship_To_Address3">
+<offset>291</offset>
+<length>35</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header13"/>
+</functions>
+</node>
+<node type="field" order="14" name="Ship_To_Address4">
+<offset>326</offset>
+<length>35</length>
+</node>
+<node type="field" order="15" name="Ship_To_City">
+<offset>361</offset>
+<length>30</length>
+<functions FunctionCount="10">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vN401_ST"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_City"/>
+<function type="If" lvalue="@vReceiverID" rvalue="030319" operator="="/>
+<function type="If" lvalue="@vN401_ST" rvalue="KNOXVILLE" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code" value="001"/>
+<function type="Elseif" lvalue="@vN401_ST" rvalue="PRICHARD" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Code" value="002"/>
+<function type="EndIf" />
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="16" name="Ship_To_Postal_Code">
+<offset>391</offset>
+<length>15</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Zip_Code"/>
+</functions>
+</node>
+<node type="field" order="17" name="Ship_To_Country_Internal">
+<offset>406</offset>
+<length>20</length>
+<functions FunctionCount="3">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vShip_To_Country"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_Country_Code"/>
+</functions>
+</node>
+<node type="field" order="18" name="Ship_to_Country_External">
+<offset>426</offset>
+<length>3</length>
+</node>
+<node type="field" order="19" name="Ship_to_State_Internal">
+<offset>429</offset>
+<length>20</length>
+<functions FunctionCount="3">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="v1100_429"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_State"/>
+</functions>
+</node>
+<node type="field" order="20" name="Ship_to_State_External">
+<offset>449</offset>
+<length>10</length>
+</node>
+<node type="field" order="21" name="Ship_To_Province_Internal">
+<offset>459</offset>
+<length>20</length>
+<functions FunctionCount="12">
+<function type="Trim" />
+<function type="Setvariable" name="v1100_459"/>
+<function type="If" lvalue="@vShip_To_Country" rvalue="CA" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_State"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vReceiverID" rvalue="111583" operator="=" datatype="text"/>
+<function type="If" lvalue="@v1100_429" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_State" value="@v1100_429"/>
+<function type="Else" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Ship_To_State" value="@v1100_459"/>
+<function type="EndIf" />
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="22" name="Ship_to_Province_External">
+<offset>479</offset>
+<length>10</length>
+</node>
+</node>
+<node type="record" name="RecNum1110" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1110</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Ship_To_Location">
+<offset>101</offset>
+<length>40</length>
+</node>
+<node type="field" order="9" name="Ship_To_Customer_Number">
+<offset>141</offset>
+<length>30</length>
+</node>
+<node type="field" order="10" name="Ship_To_Customer_SIC_Code">
+<offset>171</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Ship_To_Cust_Sales_Channel">
+<offset>201</offset>
+<length>30</length>
+</node>
+<node type="field" order="12" name="Ship_To_Contact_Last_Name">
+<offset>231</offset>
+<length>50</length>
+</node>
+<node type="field" order="13" name="Ship_To_Contact_First_Name">
+<offset>281</offset>
+<length>40</length>
+</node>
+<node type="field" order="14" name="Ship_To_Contact-Job_Title">
+<offset>321</offset>
+<length>50</length>
+</node>
+</node>
+<node type="record" name="RecNum1115" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1115</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Ship_To_Trading_Partner_Ref1">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Ship_To_Trading_Partner_Ref2">
+<offset>181</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1200" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1200</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Sold_To_Code_Internal">
+<offset>101</offset>
+<length>20</length>
+</node>
+<node type="field" order="9" name="Sold_To_code_External">
+<offset>121</offset>
+<length>20</length>
+</node>
+<node type="field" order="10" name="Sold_To_Cust_Name">
+<offset>141</offset>
+<length>60</length>
+</node>
+<node type="field" order="11" name="Sold_To_Address1">
+<offset>201</offset>
+<length>35</length>
+</node>
+<node type="field" order="12" name="Sold_To_Address2">
+<offset>236</offset>
+<length>35</length>
+</node>
+<node type="field" order="13" name="Sold_To_Address3">
+<offset>271</offset>
+<length>35</length>
+</node>
+<node type="field" order="14" name="Sold_To_Address4">
+<offset>306</offset>
+<length>35</length>
+</node>
+<node type="field" order="15" name="Sold_To_City">
+<offset>341</offset>
+<length>30</length>
+</node>
+<node type="field" order="16" name="Sold_To_Postal_Code">
+<offset>371</offset>
+<length>15</length>
+</node>
+<node type="field" order="17" name="Sold_To_Country_Internal">
+<offset>386</offset>
+<length>20</length>
+</node>
+<node type="field" order="18" name="Sold_to_Country_External">
+<offset>406</offset>
+<length>3</length>
+</node>
+<node type="field" order="19" name="Sold_to_State_Internal">
+<offset>409</offset>
+<length>20</length>
+</node>
+<node type="field" order="20" name="Sold_to_State_External">
+<offset>429</offset>
+<length>10</length>
+</node>
+<node type="field" order="21" name="Sold_To_Province_Internal">
+<offset>439</offset>
+<length>20</length>
+</node>
+<node type="field" order="22" name="Sold_to_Province_External">
+<offset>459</offset>
+<length>10</length>
+</node>
+</node>
+<node type="record" name="RecNum1210" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1210</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Sold_To_Location">
+<offset>101</offset>
+<length>40</length>
+</node>
+<node type="field" order="9" name="Sold_To_Customer_Number">
+<offset>141</offset>
+<length>30</length>
+</node>
+<node type="field" order="10" name="Sold_To_Cust_SIC_Code">
+<offset>171</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Sold_To_Sales_Channel">
+<offset>201</offset>
+<length>30</length>
+</node>
+<node type="field" order="12" name="Sold_To_Contact_Name">
+<offset>231</offset>
+<length>50</length>
+</node>
+<node type="field" order="13" name="Sold_To_Contact_First_Name">
+<offset>281</offset>
+<length>40</length>
+</node>
+<node type="field" order="14" name="Sold_To_Contact_Job_Title">
+<offset>321</offset>
+<length>50</length>
+</node>
+</node>
+<node type="record" name="RecNum1215" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1215</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Sold_To_TraPar_Ref1">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Sold_To_TraPar_Ref2">
+<offset>181</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1300" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1300</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Remit_To_Code_Internal">
+<offset>101</offset>
+<length>20</length>
+<functions FunctionCount="8">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Code"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Code_Qualifier" value="1"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vReceiverID" rvalue="028128" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Code" value="062118427"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="9" name="Remit_To_code_External">
+<offset>121</offset>
+<length>40</length>
+</node>
+<node type="field" order="10" name="Remit_To_Cust_Name">
+<offset>201</offset>
+<length>30</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Name"/>
+</functions>
+</node>
+<node type="field" order="11" name="Remit_To_Address1">
+<offset>231</offset>
+<length>35</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Address1"/>
+</functions>
+</node>
+<node type="field" order="12" name="Remit_To_Address2">
+<offset>266</offset>
+<length>35</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Address2"/>
+</functions>
+</node>
+<node type="field" order="13" name="Remit_To_Address3">
+<offset>301</offset>
+<length>35</length>
+</node>
+<node type="field" order="14" name="Remit_To_Address4">
+<offset>336</offset>
+<length>5</length>
+</node>
+<node type="field" order="15" name="Remit_To_City">
+<offset>341</offset>
+<length>30</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_City"/>
+</functions>
+</node>
+<node type="field" order="16" name="Remit_To_Postal_Code">
+<offset>371</offset>
+<length>15</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Zip_Code"/>
+</functions>
+</node>
+<node type="field" order="17" name="Remit_To_Country_Internal">
+<offset>386</offset>
+<length>20</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_Country_Code"/>
+</functions>
+</node>
+<node type="field" order="18" name="Remit_to_Country_External">
+<offset>426</offset>
+<length>3</length>
+</node>
+<node type="field" order="19" name="Remit_to_State_Internal">
+<offset>409</offset>
+<length>20</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Remit_To_State"/>
+</functions>
+</node>
+<node type="field" order="20" name="Remit_to_State_External">
+<offset>449</offset>
+<length>10</length>
+</node>
+<node type="field" order="21" name="Remit_To_Province_Internal">
+<offset>459</offset>
+<length>20</length>
+</node>
+<node type="field" order="22" name="Remit_To_Province_External">
+<offset>479</offset>
+<length>10</length>
+</node>
+<node type="field" order="23" name="Remit_To_County">
+<offset>489</offset>
+<length>25</length>
+</node>
+</node>
+<node type="record" name="RecNum1315" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1315</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Remit_To_TraPar_Ref1">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Remit_To_TraPar_Ref2">
+<offset>181</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum1400" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>1400</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Ship_From_Code_Internal">
+<offset>101</offset>
+<length>3</length>
+</node>
+<node type="field" order="9" name="Ship_From_Code_External">
+<offset>104</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum2000" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>2000</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Number">
+<offset>101</offset>
+<length>20</length>
+</node>
+<node type="field" order="9" name="Credited_Invoice_Number">
+<offset>121</offset>
+<length>20</length>
+</node>
+<node type="field" order="10" name="Ref_Inv_Number">
+<offset>141</offset>
+<length>20</length>
+</node>
+<node type="field" order="11" name="Parent_Inv_Number">
+<offset>161</offset>
+<length>20</length>
+</node>
+<node type="field" order="12" name="Shipment_Date">
+<offset>181</offset>
+<length>15</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Convert" datatype="Datetime" format="YYYYMMDD"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Shipped_Date"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="13" name="PO_Number">
+<offset>196</offset>
+<length>50</length>
+<functions FunctionCount="25">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vPo_No"/>
+<function type="Getvariable" name="vPo_No"/>
+<function type="Find" String="_" StartPosition="1"/>
+<function type="Setvariable" name="vexact1" datatype="Integer"/>
+<function type="If" lvalue="@vexact1" rvalue="0" operator="!="/>
+<function type="DelimitedMid" value="@vPo_No" fieldseparator="_" fieldno="1" outputvariable="vPO"/>
+<function type="Setvariable" name="vPo_No" value="@vPO"/>
+<function type="Else" />
+<function type="Getvariable" name="vPo_No"/>
+<function type="EndIf" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="PO_No" value="@vPo_No"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_Type" value="DI"/>
+<function type="If" lvalue="@vReceiverID" rvalue="131376" operator="="/>
+<function type="OrIf" lvalue="@vReceiverID" rvalue="015262" operator="="/>
+<function type="Length" value="@vPo_No"/>
+<function type="Setvariable" name="vLength_PO_No" datatype="Integer"/>
+<function type="If" lvalue="@vLength_PO_No" rvalue="13" operator="&lt;" datatype="integer"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_Type" value="DO"/>
+<function type="Else" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_Type" value="10"/>
+<function type="EndIf" />
+<function type="Elseif" lvalue="@vReceiverID" rvalue="015256" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_Type" value="380"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="14" name="Creation_Date">
+<offset>246</offset>
+<length>15</length>
+</node>
+<node type="field" order="15" name="PO_Revision_Number">
+<offset>261</offset>
+<length>50</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="PO_Release_No"/>
+</functions>
+</node>
+<node type="field" order="16" name="Commitment_Start_Date">
+<offset>311</offset>
+<length>15</length>
+</node>
+<node type="field" order="17" name="PO_Date">
+<offset>326</offset>
+<length>15</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Convert" datatype="Datetime" format="yyyymmdd"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="PO_Date"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="18" name="Commitment_End_Date">
+<offset>341</offset>
+<length>15</length>
+</node>
+<node type="field" order="19" name="Transaction_Date">
+<offset>356</offset>
+<length>15</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Convert" datatype="Datetime" format="yyyymmdd"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Invoice_Date"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="20" name="Last_Update_Date">
+<offset>371</offset>
+<length>15</length>
+</node>
+<node type="field" order="21" name="Due_Date">
+<offset>386</offset>
+<length>15</length>
+</node>
+<node type="field" order="22" name="Total_Amount_Due">
+<offset>401</offset>
+<length>22</length>
+<functions FunctionCount="3">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Invoice_Amount_Gross_Amt_Charges_Allowances_Taxes"/>
+<function type="Setvariable" name="vTax_TotalAmountDue"/>
+</functions>
+</node>
+<node type="field" order="23" name="Amount_Tax">
+<offset>423</offset>
+<length>22</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Amount1"/>
+</functions>
+</node>
+<node type="field" order="24" name="Amount_Freight_Due">
+<offset>445</offset>
+<length>22</length>
+<functions FunctionCount="13">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vAmount_Freight_Due" datatype="Money"/>
+<function type="Left" length="1" value="@vAmount_Freight_Due"/>
+<function type="Setvariable" name="vAmount_Freight_Due_left1" datatype="Text"/>
+<function type="If" lvalue="@vAmount_Freight_Due_left1" rvalue="+" operator="="/>
+<function type="OrIf" lvalue="@vAmount_Freight_Due_left1" rvalue="-" operator="="/>
+<function type="Mid" position="2" value="@vAmount_Freight_Due"/>
+<function type="Operatevariable" name="vAmount_Freight_Due" value="@currentvalue" datatype="Money"/>
+<function type="EndIf" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Charge_Amount1" value="@vAmount_Freight_Due"/>
+<function type="If" lvalue="@vReceiverID" rvalue="048204" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Amount" value="@vAmount_Freight_Due"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="25" name="Amount_Line_Items_Due">
+<offset>467</offset>
+<length>22</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vAmount_Line_Item_Due" datatype="Money"/>
+<function type="Setvariable" name="vCount_1" value="1" datatype="Text"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Invoice_Amount_Subj_to_Terms_Gross_Amt"/>
+<function type="Setvariable" name="vTax_AmountLineItemDue"/>
+</functions>
+</node>
+<node type="field" order="26" name="Invoice_Name_Internal">
+<offset>489</offset>
+<length>20</length>
+</node>
+<node type="field" order="27" name="Invoice_name_External">
+<offset>509</offset>
+<length>10</length>
+</node>
+<node type="field" order="28" name="GrossWeight">
+<offset>519</offset>
+<length>22</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Weight"/>
+</functions>
+</node>
+<node type="field" order="29" name="NetWeight">
+<offset>541</offset>
+<length>22</length>
+</node>
+<node type="field" order="30" name="WeightUOMCodeInt">
+<offset>563</offset>
+<length>3</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Weight_UOM"/>
+</functions>
+</node>
+<node type="field" order="31" name="WeightUOMCode">
+<offset>566</offset>
+<length>3</length>
+</node>
+<node type="field" order="32" name="Volume">
+<offset>569</offset>
+<length>22</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Volume"/>
+</functions>
+</node>
+<node type="field" order="33" name="VolumeUOMCodeInt">
+<offset>591</offset>
+<length>3</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Volume_UOM"/>
+</functions>
+</node>
+<node type="field" order="34" name="VolumeUOMCodeExt1">
+<offset>594</offset>
+<length>3</length>
+</node>
+<node type="field" order="35" name="Shipment_Number">
+<offset>597</offset>
+<length>22</length>
+</node>
+<node type="field" order="36" name="Booking_Number">
+<offset>619</offset>
+<length>30</length>
+</node>
+<node type="field" order="37" name="BillOfLadingNumber">
+<offset>649</offset>
+<length>30</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill_of_Lading_PRO_No"/>
+</functions>
+</node>
+<node type="field" order="38" name="Temp_Amt_Text">
+<offset>679</offset>
+<length>18</length>
+</node>
+</node>
+<node type="record" name="RecNum2010" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>2010</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Amount_Charges_Due">
+<offset>101</offset>
+<length>22</length>
+</node>
+</node>
+<node type="record" name="RecNum2020" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>2020</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Credit_Memo_Reason">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Transmission_Lead_Days">
+<offset>131</offset>
+<length>22</length>
+</node>
+<node type="field" order="10" name="Transaction_Source">
+<offset>153</offset>
+<length>50</length>
+</node>
+<node type="field" order="11" name="Installment_Number">
+<offset>203</offset>
+<length>22</length>
+</node>
+<node type="field" order="12" name="Maximum_Installment_Number">
+<offset>225</offset>
+<length>22</length>
+</node>
+</node>
+<node type="record" name="RecNum2030" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>2030</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Shipment_Waybill_Number">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Ship_Via_Internal">
+<offset>131</offset>
+<length>6</length>
+</node>
+<node type="field" order="10" name="SCAC">
+<offset>137</offset>
+<length>24</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="SCAC_Code"/>
+</functions>
+</node>
+<node type="field" order="11" name="Carrier_Name">
+<offset>161</offset>
+<length>30</length>
+<functions FunctionCount="6">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Carrier_Name"/>
+<function type="If" lvalue="@vReceiverID" rvalue="030050" operator="="/>
+<function type="AndIf" lvalue="@currentvalue" rvalue="EPESL_" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="SCAC_Code" value="EPESL"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="12" name="Ship_Via_External2">
+<offset>191</offset>
+<length>30</length>
+</node>
+<node type="field" order="13" name="Ship_Via_External3">
+<offset>221</offset>
+<length>30</length>
+</node>
+<node type="field" order="14" name="Ship_Via_External4">
+<offset>251</offset>
+<length>30</length>
+</node>
+<node type="field" order="15" name="Ship_Via_External5">
+<offset>281</offset>
+<length>30</length>
+</node>
+<node type="field" order="16" name="Ship_FOB_Internal">
+<offset>311</offset>
+<length>30</length>
+</node>
+<node type="field" order="17" name="Ship_FOB_Point_External1">
+<offset>341</offset>
+<length>30</length>
+</node>
+<node type="field" order="18" name="Ship_FOB_Point_External2">
+<offset>371</offset>
+<length>30</length>
+</node>
+<node type="field" order="19" name="Ship_FOB_Point_External3">
+<offset>401</offset>
+<length>30</length>
+</node>
+<node type="field" order="20" name="Ship_FOB_Point_External4">
+<offset>431</offset>
+<length>30</length>
+</node>
+<node type="field" order="21" name="Ship_FOB_Point_External5">
+<offset>461</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum2040" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>2040</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Currency_Code">
+<offset>101</offset>
+<length>15</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Currency_Code"/>
+</functions>
+</node>
+<node type="field" order="9" name="Currency_Code_Ext1">
+<offset>116</offset>
+<length>15</length>
+</node>
+<node type="field" order="10" name="Currency_Exchange_Rate">
+<offset>131</offset>
+<length>22</length>
+</node>
+<node type="field" order="11" name="Base_Currency_Code">
+<offset>153</offset>
+<length>15</length>
+</node>
+<node type="field" order="12" name="Base_Currency_Code_Ext1">
+<offset>168</offset>
+<length>15</length>
+</node>
+</node>
+<node type="record" name="RecNum2050" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>2050</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="PayTerm">
+<offset>101</offset>
+<length>40</length>
+</node>
+<node type="field" order="9" name="Term_Due_Percent">
+<offset>141</offset>
+<length>10</length>
+</node>
+<node type="field" order="10" name="Term_Due_Date">
+<offset>151</offset>
+<length>15</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Convert" datatype="Datetime" format="YYYYMMDD"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Net_Due_Date"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="11" name="Term_Due_Days">
+<offset>166</offset>
+<length>15</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Net_Days"/>
+</functions>
+</node>
+<node type="field" order="12" name="Term_Due_Day_Month">
+<offset>181</offset>
+<length>15</length>
+</node>
+<node type="field" order="13" name="Term_Due_Cutoff_Day">
+<offset>196</offset>
+<length>15</length>
+</node>
+<node type="field" order="14" name="Term_Due_Months_Forward">
+<offset>211</offset>
+<length>15</length>
+</node>
+<node type="field" order="15" name="Discount_1_Percent">
+<offset>226</offset>
+<length>10</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Percent"/>
+</functions>
+</node>
+<node type="field" order="16" name="Discount_1_Days">
+<offset>236</offset>
+<length>15</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Days_Due"/>
+</functions>
+</node>
+<node type="field" order="17" name="Discount_1_Date">
+<offset>251</offset>
+<length>15</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Convert" datatype="Datetime" format="yyyymmdd"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Discount_Due_Date"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="18" name="Discount_1_Day_of_Month">
+<offset>266</offset>
+<length>15</length>
+</node>
+<node type="field" order="19" name="Discount_1_Month_Forward">
+<offset>281</offset>
+<length>15</length>
+</node>
+<node type="field" order="20" name="Discount_2_Percent">
+<offset>296</offset>
+<length>10</length>
+</node>
+<node type="field" order="21" name="Discount_2_Days">
+<offset>306</offset>
+<length>15</length>
+</node>
+<node type="field" order="22" name="Discount_2_Date">
+<offset>321</offset>
+<length>15</length>
+</node>
+<node type="field" order="23" name="Discount_2_Day_of_Month">
+<offset>336</offset>
+<length>15</length>
+</node>
+<node type="field" order="24" name="Discount_2_Month_Forward">
+<offset>351</offset>
+<length>15</length>
+</node>
+<node type="field" order="25" name="Discount_3_Percent">
+<offset>366</offset>
+<length>10</length>
+</node>
+<node type="field" order="26" name="Discount_3_Days">
+<offset>376</offset>
+<length>15</length>
+</node>
+<node type="field" order="27" name="Discount_3_Date">
+<offset>391</offset>
+<length>15</length>
+</node>
+<node type="field" order="28" name="Discount_3_Day_of_Month">
+<offset>406</offset>
+<length>15</length>
+</node>
+<node type="field" order="29" name="Discount_3_Month_Forward">
+<offset>421</offset>
+<length>15</length>
+</node>
+<node type="field" order="30" name="Payment_Term_Name_Ext1">
+<offset>436</offset>
+<length>30</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Terms_Description"/>
+</functions>
+</node>
+<node type="field" order="31" name="Payment_Term_Name_Ext2">
+<offset>466</offset>
+<length>30</length>
+</node>
+<node type="field" order="32" name="Payment_Term_Name_Ext3">
+<offset>496</offset>
+<length>30</length>
+</node>
+<node type="field" order="33" name="Payment_Term_Name_Ext4">
+<offset>526</offset>
+<length>30</length>
+</node>
+<node type="field" order="34" name="Payment_Term_Name_Ext5">
+<offset>556</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum2060" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>2060</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Primary_Sales_Rep_Name">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Comments">
+<offset>131</offset>
+<length>241</length>
+</node>
+</node>
+<node type="record" name="RecNum3000" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3000</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Header_Flex_Context">
+<offset>101</offset>
+<length>110</length>
+</node>
+<node type="field" order="9" name="PO_Type">
+<offset>211</offset>
+<length>80</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Merchandise_Type_Code"/>
+</functions>
+</node>
+<node type="field" order="10" name="PO_Facility">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="PO_Department_Number">
+<offset>371</offset>
+<length>80</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Department_No"/>
+</functions>
+</node>
+<node type="field" order="12" name="Invoice_Header_Flex4">
+<offset>451</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum3010" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3010</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="GLN_Global_Location_Number">
+<offset>101</offset>
+<length>13</length>
+<functions FunctionCount="1">
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Credit_Authorization_No"/>
+</functions>
+</node>
+<node type="field" order="9" name="Invoice_Header_Flex6">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Vendor_Number">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Department_Number">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="PO_Type">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum3020" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3020</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Header_Flex10">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Invoice_Header_Flex11">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Invoice_Header_Flex12">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Invoice_Header_Flex13">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Invoice_Header_Flex14">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum3030" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3030</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Header_Flex15">
+<offset>101</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum3040" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3040</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Header_Interface_Context">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Sales_Order_Number">
+<offset>131</offset>
+<length>80</length>
+<functions FunctionCount="9">
+<function type="Trim" />
+<function type="Setvariable" name="v3040_131" datatype="Text"/>
+<function type="Length" value="@v3040_131"/>
+<function type="Setvariable" name="vLength_3040_131" datatype="Integer"/>
+<function type="Left" length="1" value="@v3040_131"/>
+<function type="If" lvalue="@currentvalue" rvalue="3" operator="="/>
+<function type="AndIf" lvalue="@vLength_3040_131" rvalue="7" operator="&lt;"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Receiver_ID" value="@vRecID_CreditInvoice"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="10" name="Invoice_Header_Interface2">
+<offset>211</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Invoice_Header_Interface3">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Invoice_Header_Interface4">
+<offset>371</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum3050" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3050</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Header_Interface5">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Invoice_Header_Interface6">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Invoice_Header_Interface7">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Invoice_Header_Interface8">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Invoice_Header_Interface9">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum3060" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3060</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Header_Interface10">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Invoice_Header_Interface11">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Invoice_Header_Interface12">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Invoice_Header_Interface13">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Invoice_Header_Interface14">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum3070" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3070</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_Header_Interface15">
+<offset>101</offset>
+<length>80</length>
+<functions FunctionCount="2">
+<function type="Trim" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Customer_Order_No"/>
+</functions>
+</node>
+</node>
+<node type="record" name="RecNum3072" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3072</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Invoice_HDR_Interface10">
+<offset>101</offset>
+<length>3</length>
+</node>
+<node type="field" order="9" name="Invoice_HDR_Interface11">
+<offset>104</offset>
+<length>3</length>
+</node>
+<node type="field" order="10" name="Invoice_HDR_Interface12">
+<offset>107</offset>
+<length>15</length>
+</node>
+<node type="field" order="11" name="Invoice_HDR_Interface13">
+<offset>122</offset>
+<length>15</length>
+</node>
+<node type="field" order="12" name="Invoice_HDR_Interface14">
+<offset>137</offset>
+<length>15</length>
+</node>
+<node type="field" order="13" name="Invoice_HDR_Interface15">
+<offset>152</offset>
+<length>15</length>
+</node>
+</node>
+<node type="record" name="RecNum3075" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>3075</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Equipment_Prefix">
+<offset>101</offset>
+<length>10</length>
+</node>
+<node type="field" order="9" name="Equipment_Number">
+<offset>111</offset>
+<length>30</length>
+</node>
+<node type="field" order="10" name="Packing_Slip_Number">
+<offset>141</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Routing_Instructions">
+<offset>171</offset>
+<length>150</length>
+</node>
+</node>
+<node type="record" name="RecNum4000" level="2">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+<functions FunctionCount="2">
+<function type="Newrow" exd="Exchange_810_ANY_FF" table="Detail"/>
+<function type="Operatevariable" name="vCount_UPC_Num_CostcoUS" value="+1" datatype="Integer"/>
+</functions>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+<functions FunctionCount="2">
+<function type="Trim" />
+<function type="Setvariable" name="vRefKey2"/>
+</functions>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>4000</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Number">
+<offset>101</offset>
+<length>22</length>
+<functions FunctionCount="7">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@vReceiverID" rvalue="048204" operator="="/>
+<function type="Padding" length="6" side="Left" symbol="0"/>
+<function type="Elseif" lvalue="@vReceiverID" rvalue="015262" operator="="/>
+<function type="Padding" length="4" side="Left" symbol="0"/>
+<function type="EndIf" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Line_No"/>
+</functions>
+</node>
+<node type="field" order="9" name="Credited_Line_Number">
+<offset>123</offset>
+<length>22</length>
+</node>
+<node type="field" order="10" name="Supplier_Part_Number">
+<offset>145</offset>
+<length>50</length>
+<functions FunctionCount="19">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vSupplier_VN" value="@currentvalue"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Vendor_Item_No" value="@vSupplier_VN"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Vendor_Item_Qualifier" value="VN"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vReceiverID" rvalue="108522" operator="="/>
+<function type="OrIf" lvalue="@vReceiverID" rvalue="028128" operator="="/>
+<function type="OrIf" lvalue="@vReceiverID" rvalue="048204" operator="="/>
+<function type="Getvariable" name="vSupplier_VN"/>
+<function type="Setvariable" name="vSupplierNo" value="@currentvalue" datatype="Integer"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Vendor_Item_No" value="@vSupplierNo"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vReceiverID" rvalue="104983" operator="="/>
+<function type="AndIf" lvalue="@vReceiverIDOriginal" rvalue="800080" operator="!="/>
+<function type="Getvariable" name="vSupplier_VN"/>
+<function type="Setvariable" name="vSupplierNo" value="@currentvalue" datatype="Money"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Vendor_Item_No" value="@vSupplierNo"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="11" name="Cust_Item_Number">
+<offset>195</offset>
+<length>50</length>
+<functions FunctionCount="7">
+<function type="Setvariable" name="vCustomerCode"/>
+<function type="If" lvalue="@vReceiverID" rvalue="104983" operator="="/>
+<function type="AndIf" lvalue="@vReceiverIDOriginal" rvalue="800080" operator="="/>
+<function type="Getvariable" name="vCustomerCode"/>
+<function type="Setvariable" name="vCustomer_VN" value="@currentvalue" datatype="Money"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Vendor_Item_No" value="@vCustomer_VN"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="12" name="Ordered_Quantity">
+<offset>245</offset>
+<length>22</length>
+</node>
+<node type="field" order="13" name="Invoiced_Quantity">
+<offset>267</offset>
+<length>22</length>
+<functions FunctionCount="3">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vD120"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Invoiced"/>
+</functions>
+</node>
+<node type="field" order="14" name="UOM_Code">
+<offset>289</offset>
+<length>3</length>
+<functions FunctionCount="6">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Invoiced_UOM"/>
+<function type="If" lvalue="@currentvalue" rvalue="PLT" operator="="/>
+<function type="OrIf" lvalue="@currentvalue" rvalue="EA" operator="="/>
+<function type="Setvariable" name="vUOM_Code" value="EA" datatype="Text"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="15" name="UOM_Code_Ext1">
+<offset>292</offset>
+<length>5</length>
+</node>
+<node type="field" order="16" name="Unit_Standard_Price">
+<offset>297</offset>
+<length>22</length>
+<functions FunctionCount="9">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vD122"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Unit_Price"/>
+<function type="If" lvalue="@vReceiverID" rvalue="108522" operator="="/>
+<function type="OrIf" lvalue="@vReceiverID" rvalue="51593" operator="="/>
+<function type="Setvariable" name="vD197" value="@vD122" datatype="Money"/>
+<function type="Operatevariable" name="vD197" value="*@vD120" datatype="Money"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="add_Field_Detail1" value="@vD197"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="17" name="Unit_Selling_Price">
+<offset>319</offset>
+<length>22</length>
+</node>
+<node type="field" order="18" name="Line_Amount">
+<offset>341</offset>
+<length>22</length>
+</node>
+<node type="field" order="19" name="Credit_Memo_Reason">
+<offset>363</offset>
+<length>30</length>
+</node>
+<node type="field" order="20" name="ItemIdType">
+<offset>393</offset>
+<length>20</length>
+</node>
+<node type="field" order="21" name="ItemIdTypeExt">
+<offset>413</offset>
+<length>20</length>
+</node>
+<node type="field" order="22" name="OrderedItem">
+<offset>433</offset>
+<length>100</length>
+</node>
+<node type="field" order="23" name="CustModelSerialNo">
+<offset>533</offset>
+<length>50</length>
+</node>
+<node type="field" order="24" name="ShipQty">
+<offset>583</offset>
+<length>22</length>
+<functions FunctionCount="5">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Shipped"/>
+<function type="Setvariable" name="vShipQty" datatype="Money"/>
+<function type="Operatevariable" name="vISS01" value="+@currentvalue" datatype="Money"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Units_Shipped" value="@vISS01"/>
+</functions>
+</node>
+<node type="field" order="25" name="LineType">
+<offset>605</offset>
+<length>1</length>
+</node>
+<node type="field" order="26" name="InvLineRef">
+<offset>606</offset>
+<length>22</length>
+</node>
+<node type="field" order="27" name="PoNumber">
+<offset>628</offset>
+<length>50</length>
+</node>
+<node type="field" order="28" name="PoLineNumber">
+<offset>678</offset>
+<length>25</length>
+<functions FunctionCount="6">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="PO_Line_No"/>
+<function type="If" lvalue="@vReceiverID" rvalue="015256" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Invoiced_UOM" value="1"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="PO_Line_No" value="@vRefKey2"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="29" name="GrossWeight">
+<offset>703</offset>
+<length>22</length>
+</node>
+<node type="field" order="30" name="NetWeight">
+<offset>725</offset>
+<length>2</length>
+</node>
+<node type="field" order="31" name="WgtUOMCodeInt">
+<offset>747</offset>
+<length>3</length>
+</node>
+<node type="field" order="32" name="WgtUOMcodeExt1">
+<offset>750</offset>
+<length>5</length>
+</node>
+<node type="field" order="33" name="Volume">
+<offset>755</offset>
+<length>22</length>
+</node>
+<node type="field" order="34" name="VolumeCodeInt">
+<offset>777</offset>
+<length>3</length>
+</node>
+<node type="field" order="35" name="VolumeCodeExt1">
+<offset>780</offset>
+<length>5</length>
+</node>
+<node type="field" order="36" name="ShipQty_Pack_Size">
+<offset>785</offset>
+<length>22</length>
+</node>
+<node type="field" order="37" name="ShipQtyUOMInt">
+<offset>807</offset>
+<length>3</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Qty_Shipped_UOM"/>
+</functions>
+</node>
+<node type="field" order="38" name="ShipQtyUOMExt1">
+<offset>810</offset>
+<length>3</length>
+</node>
+<node type="record" name="RecNum4010" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>4010</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Sales_Order_Number">
+<offset>101</offset>
+<length>50</length>
+<functions FunctionCount="2">
+<function type="Trim" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Vendor_Order_No"/>
+</functions>
+</node>
+<node type="field" order="9" name="Sales_Order_Revision_Number">
+<offset>151</offset>
+<length>22</length>
+</node>
+<node type="field" order="10" name="Sales_Order_Line_Number">
+<offset>173</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Sales_Order_Date">
+<offset>203</offset>
+<length>15</length>
+</node>
+<node type="field" order="12" name="Part_Description">
+<offset>218</offset>
+<length>125</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Description"/>
+</functions>
+</node>
+<node type="field" order="13" name="Cust_Item_Description">
+<offset>343</offset>
+<length>125</length>
+</node>
+</node>
+<node type="record" name="RecNum4020" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>4020</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Sales_Channel">
+<offset>101</offset>
+<length>50</length>
+</node>
+</node>
+<node type="record" name="RecNum4030" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>4030</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Ship_0rder_Status_Internal">
+<offset>101</offset>
+<length>22</length>
+</node>
+<node type="field" order="9" name="Ship_Order_Status_External">
+<offset>123</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Transaction_Ref_Key">
+<offset>203</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum4040" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>4040</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Terms">
+<offset>101</offset>
+<length>22</length>
+<functions FunctionCount="3">
+<function type="Trim" side="Both"/>
+<function type="Lookup" filename="@vLookup" section="Index37" casesensitive="False" load="False" key="@currentvalue"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="FOB_Payment_Code"/>
+</functions>
+</node>
+<node type="field" order="9" name="Ship_Order_Status_External2">
+<offset>123</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Transaction_Ref_Key2">
+<offset>203</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum4100" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>4100</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Ship_Order_Status_Internal3">
+<offset>101</offset>
+<length>22</length>
+</node>
+<node type="field" order="9" name="Ship_Order_Status_External3">
+<offset>123</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Transaction_Ref_Key3">
+<offset>203</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum4110" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>4110</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Ship_Order_Status_Internal4">
+<offset>101</offset>
+<length>22</length>
+</node>
+<node type="field" order="9" name="Ship_Order_Status_External4">
+<offset>123</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Transaction_Ref_Key4">
+<offset>203</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum5000" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5000</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Interface_Line_Flex">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Interface_Line_Flex1">
+<offset>131</offset>
+<length>30</length>
+</node>
+<node type="field" order="10" name="Interface_Line_Flex2">
+<offset>161</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Interface_Line_Flex3">
+<offset>191</offset>
+<length>30</length>
+</node>
+<node type="field" order="12" name="Interface_Line_Flex4">
+<offset>221</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum5010" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5010</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Interface_Line_Flex5">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Interface_Line_Flex6">
+<offset>131</offset>
+<length>30</length>
+</node>
+<node type="field" order="10" name="Interface_Line_Flex7">
+<offset>161</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Interface_Line_Flex8">
+<offset>191</offset>
+<length>30</length>
+</node>
+<node type="field" order="12" name="Interface_Line_Flex9">
+<offset>221</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum5020" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5020</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Interface_Line_Flex10">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Interface_Line_Flex11">
+<offset>131</offset>
+<length>30</length>
+</node>
+<node type="field" order="10" name="Interface_Line_Flex12">
+<offset>161</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Interface_Line_Flex13">
+<offset>190</offset>
+<length>30</length>
+</node>
+<node type="field" order="12" name="Interface_Line_Flex14">
+<offset>220</offset>
+<length>30</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Bill of Lading"/>
+</functions>
+</node>
+</node>
+<node type="record" name="RecNum5030" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5030</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Interface_Line_Flex15">
+<offset>101</offset>
+<length>30</length>
+</node>
+</node>
+<node type="record" name="RecNum5040" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5040</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Flex_Context">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="UPC_Number">
+<offset>131</offset>
+<length>80</length>
+<functions FunctionCount="12">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vUPC_Code" datatype="Text"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="UPC_Code"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="UPC_Qualifier" value="UP"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vReceiverID" rvalue="015254" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_No_of_Line_Items" value="@vCount_UPC_Num_CostcoUS"/>
+<function type="Else" />
+<function type="Operatevariable" name="vCount_UPC_Num" value="+1" datatype="Integer"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_No_of_Line_Items" value="@vCount_UPC_Num"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="10" name="Line_Flex2">
+<offset>211</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Cust_Item">
+<offset>291</offset>
+<length>80</length>
+<functions FunctionCount="7">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Buyer_Item_No"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Buyer_Item_Qualifier" value="IN"/>
+<function type="Padding" length="13" side="Right" symbol="0"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Product_Code5"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="12" name="GTIN">
+<offset>371</offset>
+<length>80</length>
+<functions FunctionCount="7">
+<function type="Trim" side="Both"/>
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Product_Code4"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Product_Qualifier4" value="UK"/>
+<function type="EndIf" />
+<function type="Mid" position="2" length="12" value="@currentvalue"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="add_Field_Detail5"/>
+</functions>
+</node>
+</node>
+<node type="record" name="RecNum5050" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5050</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Flex5">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Allow_Indicator">
+<offset>181</offset>
+<length>1</length>
+</node>
+<node type="field" order="10" name="Allow_Code">
+<offset>182</offset>
+<length>30</length>
+</node>
+<node type="field" order="11" name="Allow_Amount">
+<offset>212</offset>
+<length>14</length>
+</node>
+<node type="field" order="12" name="Method_of_Handling">
+<offset>226</offset>
+<length>6</length>
+</node>
+<node type="field" order="13" name="Allow_Amount_Off">
+<offset>232</offset>
+<length>15</length>
+</node>
+<node type="field" order="14" name="Quanty_Items_Disc">
+<offset>247</offset>
+<length>15</length>
+</node>
+<node type="field" order="15" name="Mark_for_store">
+<offset>261</offset>
+<length>5</length>
+<functions FunctionCount="2">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Mark_For_Store"/>
+</functions>
+</node>
+<node type="field" order="16" name="Line_Flex6">
+<offset>262</offset>
+<length>35</length>
+</node>
+<node type="field" order="17" name="Line_Flex7">
+<offset>297</offset>
+<length>80</length>
+</node>
+<node type="field" order="18" name="Line_Flex8">
+<offset>377</offset>
+<length>80</length>
+</node>
+<node type="field" order="19" name="Line_Flex9">
+<offset>457</offset>
+<length>80</length>
+</node>
+<node type="field" order="20" name="Line_Flex10">
+<offset>537</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5060" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5060</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Flex11">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Line_Flex12">
+<offset>181</offset>
+<length>80</length>
+<functions FunctionCount="1">
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header5"/>
+</functions>
+</node>
+<node type="field" order="10" name="Line_Flex13">
+<offset>261</offset>
+<length>80</length>
+<functions FunctionCount="8">
+<function type="DelimitedMid" fieldseparator=";" fieldno="1" outputvariable="vDropshipAdd"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header6" value="@vDropshipAdd"/>
+<function type="DelimitedMid" fieldseparator=";" fieldno="2" outputvariable="vDropshipCity"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header7" value="@vDropshipCity"/>
+<function type="DelimitedMid" fieldseparator=";" fieldno="3" outputvariable="vDropshipState"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header8" value="@vDropshipState"/>
+<function type="DelimitedMid" fieldseparator=";" fieldno="4" outputvariable="vDropshipZip"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add_Field_Header9" value="@vDropshipZip"/>
+</functions>
+</node>
+<node type="field" order="11" name="Line_Flex14">
+<offset>341</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5070" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5070</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Flex15">
+<offset>101</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5100" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5100</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Part_Flex_Context">
+<offset>101</offset>
+<length>30</length>
+</node>
+<node type="field" order="9" name="Line_Part_Flex1">
+<offset>131</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Line_Part_Flex2">
+<offset>211</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Line_Part_Flex3">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Line_Part_Flex4">
+<offset>371</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5110" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5110</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Part_Flex5">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Item_Description_Flex6">
+<offset>131</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Line_Part_Flex7">
+<offset>211</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Line_Part_Flex8">
+<offset>291</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Line_Part_Flex9">
+<offset>371</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5120" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5120</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Part_Flex10">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Line_Part_Flex11">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Pack_Size">
+<offset>261</offset>
+<length>80</length>
+<functions FunctionCount="8">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Pack"/>
+<function type="If" lvalue="@vReceiverID" rvalue="900556" operator="="/>
+<function type="OrIf" lvalue="@vReceiverID" rvalue="900557" operator="="/>
+<function type="If" lvalue="@vUOM_Code" rvalue="EA" operator="="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Pack" value="@null1"/>
+<function type="EndIf" />
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="11" name="Line_Part_Flex13">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Line_Part_Flex14">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5130" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5130</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Line_Flex15">
+<offset>101</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5140" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5140</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Header_TP_Flex10">
+<offset>101</offset>
+<length>80</length>
+</node>
+<node type="field" order="9" name="Header_TP_Flex11">
+<offset>181</offset>
+<length>80</length>
+</node>
+<node type="field" order="10" name="Header_TP_Flex12">
+<offset>261</offset>
+<length>80</length>
+</node>
+<node type="field" order="11" name="Header_TP_Flex13">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="Header_TP_Flex14">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5150" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5150</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum5160" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5160</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum5170" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5170</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum5180" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5180</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum5190" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5190</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum5200" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5200</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="INDUSTRY_Attribute1">
+<offset>101</offset>
+<length>80</length>
+<functions FunctionCount="16">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="vIndustry_Attribute1" datatype="Text"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Description1"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Description1"/>
+<function type="Lookup" filename="@vLookup" section="SacDescrip" casesensitive="False" load="False" key="@currentvalue"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code1"/>
+<function type="Getvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount1"/>
+<function type="If" lvalue="@vIndustry_Attribute1" rvalue="" operator="="/>
+<function type="AndIf" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code1" value="I570"/>
+<function type="EndIf" />
+<function type="Lookup" filename="@vLookup" section="SAC_Item" casesensitive="False" load="False" key="@vIndustry_Attribute1"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Code1"/>
+<function type="If" lvalue="@vReceiverID" rvalue="134456" operator="=" datatype="text"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code1" value="C310"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="9" name="INDUSTRY_Attribute2">
+<offset>181</offset>
+<length>80</length>
+<functions FunctionCount="9">
+<function type="Trim" side="Both"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount1"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Amount1"/>
+<function type="If" lvalue="@vReceiverID" rvalue="021183" operator="=" datatype="text"/>
+<function type="AndIf" lvalue="@currentvalue" rvalue="" operator="="/>
+<function type="AndIf" lvalue="@vAmount_Freight_Due" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount1" value="@vAmount_Freight_Due"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code1" value="D240"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="10" name="INDUSTRY_Attribute3">
+<offset>261</offset>
+<length>80</length>
+<functions FunctionCount="8">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="v5200_Attribute3" datatype="Text"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Description2"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Description2"/>
+<function type="Lookup" filename="@vLookup" section="SacDescrip" casesensitive="False" load="False" key="@currentvalue"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code2"/>
+<function type="Lookup" filename="@vLookup" section="SAC_Item" casesensitive="False" load="False" key="@v5200_Attribute3"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Code2"/>
+</functions>
+</node>
+<node type="field" order="11" name="INDUSTRY_Attribute4">
+<offset>341</offset>
+<length>80</length>
+<functions FunctionCount="2">
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount2"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Allowance_Amount2"/>
+</functions>
+</node>
+<node type="field" order="12" name="INDUSTRY_Attribute5">
+<offset>421</offset>
+<length>80</length>
+<functions FunctionCount="2">
+<function type="Lookup" filename="@vLookup" section="SacDescrip" casesensitive="False" load="False" key="@currentvalue"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header17"/>
+</functions>
+</node>
+<node type="field" order="13" name="INDUSTRY_Attribute6">
+<offset>421</offset>
+<length>3</length>
+</node>
+<node type="field" order="14" name="INDUSTRY_Attribute7">
+<offset>424</offset>
+<length>3</length>
+</node>
+<node type="field" order="15" name="INDUSTRY_Attribute8">
+<offset>427</offset>
+<length>3</length>
+</node>
+<node type="field" order="16" name="INDUSTRY_Attribute9">
+<offset>441</offset>
+<length>2</length>
+<functions FunctionCount="3">
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Operatevariable" name="vTXI03GS441" value="+@currentvalue" datatype="Integer"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="17" name="INDUSTRY_Attribute10">
+<offset>443</offset>
+<length>2</length>
+<functions FunctionCount="3">
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Operatevariable" name="vTXI03HS443" value="+@currentvalue" datatype="Integer"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="18" name="INDUSTRY_Attribute11">
+<offset>445</offset>
+<length>2</length>
+<functions FunctionCount="16">
+<function type="If" lvalue="@currentvalue" rvalue="" operator="!="/>
+<function type="Operatevariable" name="vTXI03PS445" value="+@currentvalue" datatype="Integer"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vReceiverID" rvalue="068580" operator="="/>
+<function type="If" lvalue="@vTXI03GS441" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header19" value="@vTXI03GS441"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vTXI03HS443" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Percent2" value="@vTXI03HS443"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="TaxID2" value="140089947RT0001"/>
+<function type="EndIf" />
+<function type="If" lvalue="@vTXI03PS445" rvalue="" operator="!="/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Tax_Percent3" value="@vTXI03PS445"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="TaxID3" value="140089947RT0001"/>
+<function type="EndIf" />
+<function type="EndIf" />
+</functions>
+</node>
+</node>
+<node type="record" name="RecNum5210" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5210</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="INDUSTRY_Attribute6">
+<offset>101</offset>
+<length>80</length>
+<functions FunctionCount="7">
+<function type="Trim" side="Both"/>
+<function type="Setvariable" name="v5210_Attribute6" datatype="Text"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Description3"/>
+<function type="Lookup" filename="@vLookup" section="SacDescrip" casesensitive="False" load="False" key="@currentvalue"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code3"/>
+<function type="Lookup" filename="@vLookup" section="SAC_Item" casesensitive="False" load="False" key="@v5210_Attribute6"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Charge_Code1"/>
+</functions>
+</node>
+<node type="field" order="9" name="INDUSTRY_Attribute7">
+<offset>181</offset>
+<length>80</length>
+<functions FunctionCount="33">
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount3"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Detail" field="Item_Charge_Amount1"/>
+<function type="If" lvalue="@vReceiverID" rvalue="030050" operator="="/>
+<function type="AndIf" lvalue="@vAmount_Line_Item_Due" rvalue="" operator="!="/>
+<function type="If" lvalue="@vCount_1" rvalue="1" operator="=" datatype="text"/>
+<function type="Setvariable" name="vCount_1" value="2" datatype="Text"/>
+<function type="Operatevariable" name="vAllowance_Amount1_THD" value="@vAmount_Line_Item_Due" datatype="Money"/>
+<function type="Operatevariable" name="vAllowance_Amount1_THD" value="*0.0125" datatype="Money"/>
+<function type="Getvariable" name="vAllowance_Amount1_THD"/>
+<function type="Format" format="0.00"/>
+<function type="Setvariable" name="vAllowance_Amount1_THD" datatype="Money"/>
+<function type="Operatevariable" name="vAllowance_Amount2_THD" value="@vAmount_Line_Item_Due" datatype="Money"/>
+<function type="Operatevariable" name="vAllowance_Amount2_THD" value="*0.02" datatype="Money"/>
+<function type="Getvariable" name="vAllowance_Amount2_THD"/>
+<function type="Format" format="0.00"/>
+<function type="Setvariable" name="vAllowance_Amount2_THD" datatype="Money"/>
+<function type="Operatevariable" name="vAllowance_Amount3_THD" value="@vAmount_Line_Item_Due" datatype="Money"/>
+<function type="Operatevariable" name="vAllowance_Amount3_THD" value="*0.03" datatype="Money"/>
+<function type="Getvariable" name="vAllowance_Amount3_THD"/>
+<function type="Format" format="0.00"/>
+<function type="Setvariable" name="vAllowance_Amount3_THD" datatype="Money"/>
+<function type="Operatevariable" name="vAmount_Line_Item_Due" value="-@vAllowance_Amount1_THD" datatype="Money"/>
+<function type="Operatevariable" name="vAmount_Line_Item_Due" value="-@vAllowance_Amount2_THD" datatype="Money"/>
+<function type="Operatevariable" name="vAmount_Line_Item_Due" value="-@vAllowance_Amount3_THD" datatype="Money"/>
+<function type="EndIf" />
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Total_Invoice_Amount_Gross_Amt_Charges_Allowances_Taxes" value="@vAmount_Line_Item_Due"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code1" value="C300"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount1" value="@vAllowance_Amount1_THD"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code2" value="H000"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount2" value="@vAllowance_Amount2_THD"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Code3" value="I170"/>
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="Allowance_Amount3" value="@vAllowance_Amount3_THD"/>
+<function type="EndIf" />
+</functions>
+</node>
+<node type="field" order="10" name="INDUSTRY_Attribute8">
+<offset>261</offset>
+<length>80</length>
+<functions FunctionCount="1">
+<function type="Setvalue" exd="Exchange_810_ANY_FF" table="Header" field="add. Field Header18"/>
+</functions>
+</node>
+<node type="field" order="11" name="INDUSTRY_Attribute9">
+<offset>341</offset>
+<length>80</length>
+</node>
+<node type="field" order="12" name="INDUSTRY_Attribute10">
+<offset>421</offset>
+<length>80</length>
+</node>
+</node>
+<node type="record" name="RecNum5220" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>5220</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6000" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6000</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6005" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6005</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6010" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6010</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6020" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6020</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+<node type="field" order="8" name="Tax_Percent">
+<offset>105</offset>
+<length>1</length>
+<functions FunctionCount="1">
+<function type="Setvariable" name="vTax_Percent"/>
+</functions>
+</node>
+</node>
+<node type="record" name="RecNum6025" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6025</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6030" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6030</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6040" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6040</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6050" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6050</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6060" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6060</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6070" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6070</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6080" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6080</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6090" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6090</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum6095" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>6095</identifier>
+</node>
+<node type="field" order="6" name="Record_Layout">
+<offset>96</offset>
+<length>2</length>
+</node>
+<node type="field" order="7" name="Record_Qualifier">
+<offset>98</offset>
+<length>3</length>
+</node>
+</node>
+<node type="record" name="RecNum7000" level="3">
+<node type="field" order="1" name="TP_Code">
+<offset>1</offset>
+<length>25</length>
+</node>
+<node type="field" order="2" name="RefKey1">
+<offset>26</offset>
+<length>22</length>
+</node>
+<node type="field" order="3" name="RefKey2">
+<offset>48</offset>
+<length>22</length>
+</node>
+<node type="field" order="4" name="RefKey3">
+<offset>70</offset>
+<length>22</length>
+</node>
+<node type="field" order="5" name="Colum_4">
+<offset>92</offset>
+<length>4</length>
+<identifier>7000</identifier>
+<functions FunctionCount="1">
+<function type="Operatevariable" name="vInvoiceNo" value="@vInvoice"/>
+</functions>
+</node>
+<node type="field" order="6" name="Line_Number">
+<offset>105</offset>
+<length>22</length>
+</node>
+<node type="field" order="7" name="Allowance_Charge_Indicator">
+<offset>127</offset>
+<length>1</length>
+</node>
+<node type="field" order="8" name="Allowance_Charge_Amount">
+<offset>128</offset>
+<length>22</length>
+</node>
+<node type="field" order="9" name="Special_Services_Code">
+<offset>150</offset>
+<length>10</length>
+</node>
+</node>
+</node>
+</node>
+<node type="function" name="PostProcessing">
+<functions FunctionCount="0">
+<function type="Debug" variable="" tracefile="C:\DiCentral\DiUnite\jobs\IGLOO_810_ANY_FF\DB.html" traceall="Y" />
+</functions>
+</node>
+</doc>
+</xmap>

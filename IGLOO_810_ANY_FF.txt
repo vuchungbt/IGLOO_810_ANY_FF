@@ -1,0 +1,12 @@
+- Date time: 9/13/2024 12:00:00 AM
+- User: 
+- ProfileGroup: QACIP
+- Profile: Igloo
+************************************************************************* 
+- Project: Igloo_810
+- Version: 20220722
+- Description: Case#17552880
+MapID:4933, HubID:12038
+
+- Update: index#279, 280,281,285
+- Specification: 
