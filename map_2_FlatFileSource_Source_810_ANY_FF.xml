@@ -17,7 +17,7 @@
 <node type="field" order="1" name="TP_Code">
 <offset>1</offset>
 <length>25</length>
-<functions FunctionCount="9">
+<functions FunctionCount="10">
 <function type="Newrow" exd="Exchange_810_ANY_FF" table="Header"/>
 <function type="Trim" side="Both"/>
 <function type="Setvariable" name="vNum-1" value="-1" datatype="Integer"/>
@@ -26,6 +26,7 @@
 <function type="Setvariable" name="vISS01" value="0" datatype="Money"/>
 <function type="Setvariable" name="vTXI03PS445" value="@null"/>
 <function type="Setvariable" name="vTXI03HS443" value="@null"/>
+<function type="Setvariable" name="vTXI03GS441" value="@null"/>
 <function type="Setvariable" name="vTXI03GS441" value="@null"/>
 </functions>
 </node>
